@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta char = "utf-8">
+        <title>Painting blocks</title>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script> 
+        <script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <style type = "text/css">
+            .board{
+                width: 600px;height: 600px;
+                margin: 100px auto;
+                background-color: rgba(211, 211, 211, 0.842);
+                position: relative;
+            }
+            .cell{
+                box-sizing: border-box;
+                width: 100px;height: 100px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        </style>
+        <script type = "text/babel">
+            class Cell extends React.Component{
+                constructor(props){
+                    super(props);
+                }
+                render(){
+                    return <div class = "cell" onMouseOver = {this.over.bind(this)} onMouseOut = {this.out.bind(this)}></div>
+                }
+                over(e){
+                    let cell = document.getElementsByClassName("cell")[this.props.index];
+                    cell.style.backgroundColor = randomRgbColor();
+                    cell.style.boxShadow = "white 0px 0px 8px"
+                }
+                out(){
+                    let cell = document.getElementsByClassName("cell")[this.props.index];
+                    cell.style.boxShadow = "none"
+                }
+            }
+            class Board extends React.Component{
+                constructor(props){
+                    super(props);
+                }
+                render(){
+                    let cells = []
+                    for (let i = 0; i < 36; i++){
+                        cells.push(<Cell index = {i}/>)
+                    }
+                    return <div class = "board">{cells}</div>
+                }
+            }
+            onload = ()=>{
+                ReactDOM.render(<Board/>, document.body)
+            }
+            function randomRgbColor(){
+                var r = Math.ceil(Math.random() * 256);
+                var g = Math.ceil(Math.random() * 256);
+                var b = Math.ceil(Math.random() * 256);
+                var alpha = Math.random()
+                return `rgb(${r}, ${g}, ${b}, ${alpha})`;
+            }
+        </script>
+    </head>
+    <body style = "background-color: rgb(24, 23, 23)">
+    </body>
+</html>
